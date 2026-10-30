@@ -150,9 +150,167 @@
         .crimson-line-hover:hover::after {
             width: 100%;
         }
+
+        /* ========================================= */
+        /* THE TWIST: POSSESSION MODE STYLES & GLITCH */
+        /* ========================================= */
+        body.possessed-mode {
+            background-color: #2b0206 !important;
+            color: #ffe5e8 !important;
+            background-image: 
+                radial-gradient(ellipse at 50% 10%, rgba(255, 0, 55, 0.45) 0%, transparent 70%),
+                radial-gradient(circle at 80% 60%, rgba(139, 0, 0, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(0, 0, 0, 0.95) 0%, transparent 60%),
+                linear-gradient(135deg, #1f0104 0%, #3d0006 40%, #0d0002 100%) !important;
+            filter: contrast(125%) saturate(140%);
+            animation: possessed-screen-twitch 6s infinite ease-in-out;
+        }
+
+        @keyframes possessed-screen-twitch {
+            0%, 93%, 100% { filter: contrast(125%) saturate(140%); }
+            94% { filter: contrast(180%) invert(85%) hue-rotate(180deg); transform: translate(-2px, 1px); }
+            95% { filter: contrast(140%) saturate(200%); transform: translate(2px, -1px); }
+            96% { filter: contrast(125%) saturate(140%); transform: translate(0, 0); }
+        }
+
+        /* Blood-red glitch/flicker animation for headlines */
+        body.possessed-mode h1,
+        body.possessed-mode h2,
+        body.possessed-mode h3,
+        body.possessed-mode .glitch-target {
+            color: #ff1a3c !important;
+            text-shadow: 
+                2px 0 0 #000, 
+                -2px 0 0 #ff0033, 
+                0 0 15px rgba(255, 0, 51, 0.8),
+                0 0 30px rgba(139, 0, 0, 0.9) !important;
+            animation: blood-glitch 2.2s infinite ease-in-out;
+        }
+
+        @keyframes blood-glitch {
+            0% {
+                transform: skew(0deg);
+                text-shadow: 2px 0 0 #000, -2px 0 0 #ff0033, 0 0 15px rgba(255, 0, 51, 0.8);
+            }
+            15% {
+                transform: skew(-1.5deg) translate(-2px, 1px);
+                text-shadow: -3px 0 0 #ff0033, 3px 0 0 #fff, 0 0 25px rgba(255, 0, 51, 1);
+            }
+            17% {
+                transform: skew(2deg) translate(2px, -1px);
+                text-shadow: 3px 0 0 #3a0005, -3px 0 0 #ff1a3c, 0 0 30px rgba(255, 0, 51, 0.9);
+            }
+            20% {
+                transform: skew(0deg) translate(0, 0);
+                text-shadow: 2px 0 0 #000, -2px 0 0 #ff0033, 0 0 15px rgba(255, 0, 51, 0.8);
+            }
+            60% {
+                transform: skew(0deg);
+                opacity: 1;
+            }
+            62% {
+                opacity: 0.7;
+                transform: scale(1.01) skew(1deg);
+            }
+            64% {
+                opacity: 1;
+                transform: scale(1) skew(0deg);
+            }
+            100% {
+                transform: skew(0deg);
+                text-shadow: 2px 0 0 #000, -2px 0 0 #ff0033, 0 0 15px rgba(255, 0, 51, 0.8);
+            }
+        }
+
+        /* Inverted colors & crimson transform accents in possessed mode */
+        body.possessed-mode .newspaper-border {
+            border-color: #ff0033 !important;
+            outline-color: #ff4d6d !important;
+            box-shadow: 0 0 30px rgba(255, 0, 51, 0.4), inset 0 0 25px rgba(255, 0, 51, 0.2) !important;
+        }
+
+        body.possessed-mode header {
+            background-color: rgba(43, 2, 6, 0.95) !important;
+            border-bottom-color: #ff0033 !important;
+        }
+
+        body.possessed-mode .bg-charcoal-900,
+        body.possessed-mode .bg-charcoal-900\/90,
+        body.possessed-mode .bg-charcoal-900\/80,
+        body.possessed-mode .bg-charcoal-950,
+        body.possessed-mode .bg-charcoal-950\/90,
+        body.possessed-mode .bg-charcoal-950\/80 {
+            background-color: #170104 !important;
+            border-color: rgba(255, 0, 51, 0.45) !important;
+        }
+
+        body.possessed-mode .text-gothicGold,
+        body.possessed-mode .text-gothicGold\/80,
+        body.possessed-mode .text-gothicGold\/70 {
+            color: #ff4d6d !important;
+        }
+
+        body.possessed-mode img {
+            filter: contrast(160%) brightness(85%) sepia(80%) hue-rotate(310deg) saturate(350%) !important;
+        }
+
+        /* Cursed Eye / Skull floating button animations */
+        @keyframes cursed-eye-pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px 4px rgba(217, 4, 41, 0.7), inset 0 0 15px rgba(217, 4, 41, 0.5);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 35px 8px rgba(255, 0, 51, 0.95), inset 0 0 25px rgba(255, 0, 51, 0.8);
+                transform: scale(1.06);
+            }
+        }
+
+        .cursed-toggle-btn {
+            animation: cursed-eye-pulse 2.4s infinite ease-in-out;
+        }
+
+        .cursed-toggle-btn.active {
+            animation: cursed-eye-pulse 0.9s infinite ease-in-out;
+            background: linear-gradient(135deg, #ff0033, #8b0000) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 40px 10px rgba(255, 0, 51, 1), inset 0 0 20px #fff !important;
+        }
     </style>
 </head>
 <body class="selection:bg-crimson-600 selection:text-bone-50 overflow-x-hidden antialiased">
+
+    <!-- ======================================================== -->
+    <!-- THE TWIST: POSSESSION TOGGLE BUTTON (FIXED CORNER WIDGET) -->
+    <!-- ======================================================== -->
+    <aside aria-label="Possessed Mode Toggle" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 group select-none">
+        <!-- Floating Tooltip / In-Universe Warning -->
+        <div id="possessed-tooltip" class="px-3 py-1.5 rounded bg-charcoal-950/95 border border-crimson-700/80 text-crimson-400 font-cinzel text-[11px] font-bold tracking-widest uppercase shadow-crimson-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center gap-1.5 whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full bg-crimson-500 animate-ping"></span>
+            <span id="possessed-tooltip-text">Invoke Possession</span>
+        </div>
+
+        <!-- The Glowing Cursed Eye / Skull Button -->
+        <button id="possession-toggle" onclick="togglePossessionMode()" 
+                class="cursed-toggle-btn relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-charcoal-950 border-2 border-crimson-600 flex items-center justify-center cursor-pointer transition-all duration-300 transform hover:scale-110 active:scale-95"
+                title="Toggle Possessed Mode"
+                aria-pressed="false">
+            <!-- Outer Pulsing Glyphs -->
+            <div class="absolute inset-0 rounded-full border border-dashed border-crimson-500/60 animate-[spin_10s_linear_infinite] pointer-events-none"></div>
+
+            <!-- Normal State Icon: Cursed Eye -->
+            <div id="icon-normal" class="flex flex-col items-center justify-center transition-transform duration-300">
+                <i data-lucide="eye" class="w-6 h-6 sm:w-7 sm:h-7 text-crimson-500 filter drop-shadow-[0_0_8px_rgba(217,4,41,0.9)]"></i>
+                <span class="text-[8px] font-cinzel font-black tracking-tighter text-gothicGold mt-0.5 uppercase">Possess</span>
+            </div>
+
+            <!-- Possessed State Icon: Flaming Skull -->
+            <div id="icon-possessed" class="hidden flex-col items-center justify-center transition-transform duration-300">
+                <i data-lucide="skull" class="w-6 h-6 sm:w-7 sm:h-7 text-bone-50 filter drop-shadow-[0_0_12px_rgba(255,255,255,1)] animate-pulse"></i>
+                <span class="text-[8px] font-cinzel font-black tracking-tighter text-bone-100 mt-0.5 uppercase">Exorcise</span>
+            </div>
+        </button>
+    </aside>
 
     <!-- Top Ticker / Weather Bar -->
     <header class="border-b border-gothicGold/30 bg-charcoal-950/90 backdrop-blur-md sticky top-0 z-40 text-xs text-bone-300">
@@ -931,6 +1089,53 @@
             setTimeout(() => {
                 articleModal.classList.add('hidden');
             }, 300);
+        }
+
+        // Possessed Mode (The Twist: Possession) Logic
+        let isPossessed = false;
+        function togglePossessionMode() {
+            isPossessed = !isPossessed;
+            const body = document.body;
+            const toggleBtn = document.getElementById('possession-toggle');
+            const iconNormal = document.getElementById('icon-normal');
+            const iconPossessed = document.getElementById('icon-possessed');
+            const tooltipText = document.getElementById('possessed-tooltip-text');
+
+            if (isPossessed) {
+                body.classList.add('possessed-mode');
+                toggleBtn.classList.add('active');
+                toggleBtn.setAttribute('aria-pressed', 'true');
+                iconNormal.classList.add('hidden');
+                iconNormal.classList.remove('flex');
+                iconPossessed.classList.remove('hidden');
+                iconPossessed.classList.add('flex');
+                tooltipText.textContent = "Exorcise Spirits";
+
+                // Quick flash effect
+                const flash = document.createElement('div');
+                flash.style.position = 'fixed';
+                flash.style.inset = '0';
+                flash.style.backgroundColor = 'rgba(255, 0, 55, 0.4)';
+                flash.style.pointerEvents = 'none';
+                flash.style.zIndex = '9999';
+                flash.style.transition = 'opacity 0.4s ease-out';
+                document.body.appendChild(flash);
+                setTimeout(() => {
+                    flash.style.opacity = '0';
+                    setTimeout(() => flash.remove(), 400);
+                }, 50);
+
+            } else {
+                body.classList.remove('possessed-mode');
+                toggleBtn.classList.remove('active');
+                toggleBtn.setAttribute('aria-pressed', 'false');
+                iconNormal.classList.remove('hidden');
+                iconNormal.classList.add('flex');
+                iconPossessed.classList.add('hidden');
+                iconPossessed.classList.remove('flex');
+                tooltipText.textContent = "Invoke Possession";
+            }
+            lucide.createIcons();
         }
 
         // Close modals on clicking backdrop
