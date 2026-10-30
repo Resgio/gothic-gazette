@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gothic Gazette — Nevermore Academy's Forbidden Chronicles</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Cinzel+Decorative:wght@700;900&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Pirata+One&family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: {
+                            950: '#050506',
+                            900: '#08080A',
+                            800: '#121216',
+                            700: '#1c1c24',
+                            600: '#2a2a35'
+                        },
+                        crimson: {
+                            900: '#4a0000',
+                            800: '#6b0005',
+                            700: '#8B0000',
+                            600: '#b30009',
+                            500: '#D90429',
+                            400: '#ef233c'
+                        },
+                        bone: {
+                            50: '#ffffff',
+                            100: '#f8f8f8',
+                            200: '#E2E2E2',
+                            300: '#c5c5c7',
+                            400: '#9b9b9f'
+                        },
+                        gothicGold: {
+                            light: '#e6c887',
+                            DEFAULT: '#C5A059',
+                            dark: '#8c6d32'
+                        }
+                    },
+                    fontFamily: {
+                        gothic: ['"Pirata One"', 'serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                        cinzelDeco: ['"Cinzel Decorative"', 'serif'],
+                        playfair: ['"Playfair Display"', 'serif'],
+                        inter: ['"Inter"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'crimson-glow': '0 0 25px -5px rgba(217, 4, 41, 0.45)',
+                        'crimson-glow-lg': '0 0 45px -5px rgba(139, 0, 0, 0.65)',
+                        'gold-glow': '0 0 20px -3px rgba(197, 160, 89, 0.35)',
+                        'inner-dark': 'inset 0 0 40px rgba(0, 0, 0, 0.85)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Gothic styling utilities & textures */
+        body {
+            background-color: #08080A;
+            color: #E2E2E2;
+            font-family: 'Inter', sans-serif;
+            background-image: 
+                radial-gradient(ellipse at 50% 0%, rgba(139, 0, 0, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 15% 50%, rgba(197, 160, 89, 0.04) 0%, transparent 40%),
+                linear-gradient(to bottom, #08080A, #050506);
+            background-attachment: fixed;
+        }
+
+        .newspaper-border {
+            border: 1px solid rgba(197, 160, 89, 0.25);
+            outline: 1px solid rgba(139, 0, 0, 0.35);
+            outline-offset: 4px;
+        }
+
+        .gothic-header-rule {
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        .gothic-header-rule::before,
+        .gothic-header-rule::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.4);
+        }
+        .gothic-header-rule:not(:empty)::before {
+            margin-right: 1.5em;
+        }
+        .gothic-header-rule:not(:empty)::after {
+            margin-left: 1.5em;
+        }
+
+        /* Parchment vintage overlay */
+        .vignette-overlay {
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.88), inset 0 0 20px rgba(139,0,0,0.4);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a35;
+            border-radius: 4px;
+            border: 1px solid #C5A059;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8B0000;
+        }
+
+        /* Web animations */
+        @keyframes pulse-crimson {
+            0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 12px rgba(217, 4, 41, 0.7)); }
+            50% { opacity: 0.3; filter: drop-shadow(0 0 4px rgba(217, 4, 41, 0.2)); }
+        }
+        .animate-blood-pulse {
+            animation: pulse-crimson 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .crimson-line-hover {
+            position: relative;
+        }
+        .crimson-line-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #D90429, #C5A059);
+            transition: width 0.3s ease;
+        }
+        .crimson-line-hover:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="selection:bg-crimson-600 selection:text-bone-50 overflow-x-hidden antialiased">
+
+    <!-- Top Ticker / Weather Bar -->
+    <header class="border-b border-gothicGold/30 bg-charcoal-950/90 backdrop-blur-md sticky top-0 z-40 text-xs text-bone-300">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-crimson-900/60 text-crimson-400 font-cinzel text-[11px] font-bold tracking-wider uppercase border border-crimson-700/50">
+                    <span class="w-1.5 h-1.5 rounded-full bg-crimson-500 animate-ping"></span>
+                    Volume LXVI • Issue XIII
+                </span>
+                <span class="hidden sm:inline font-cinzel text-gothicGold/80">Jericho, New England • Nevermore Academy Quad</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <span class="hidden md:flex items-center gap-1.5 text-bone-300">
+                    <i data-lucide="moon" class="w-3.5 h-3.5 text-gothicGold"></i>
+                    Waxing Gibbous (Blood Moon Impending)
+                </span>
+                <span class="flex items-center gap-1.5 text-bone-300">
+                    <i data-lucide="skull" class="w-3.5 h-3.5 text-crimson-500"></i>
+                    Hypothermia Index: Lethal
+                </span>
+                <button onclick="openSecretModal()" class="flex items-center gap-1.5 text-gothicGold hover:text-crimson-400 transition-colors font-cinzel text-xs font-semibold tracking-wider uppercase underline underline-offset-4 decoration-gothicGold/40 hover:decoration-crimson-500">
+                    <i data-lucide="feather" class="w-3.5 h-3.5"></i>
+                    Send Anonymous Tip
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Newspaper Masthead Header -->
+    <div class="relative py-8 px-4 border-b border-charcoal-700 bg-gradient-to-b from-charcoal-950 via-charcoal-900 to-charcoal-950">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <!-- Ornamental Top Badge -->
+            <div class="flex items-center justify-center gap-4 text-gothicGold mb-3">
+                <span class="h-[1px] w-16 bg-gradient-to-r from-transparent to-gothicGold"></span>
+                <span class="font-cinzel text-[11px] tracking-[0.35em] uppercase text-gothicGold/90">Veritas Morsque Praestat • Outcasts & Freaks</span>
+                <span class="h-[1px] w-16 bg-gradient-to-l from-transparent to-gothicGold"></span>
+            </div>
+
+            <!-- Grand Title -->
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-gothic tracking-wider text-bone-100 uppercase drop-shadow-[0_4px_18px_rgba(139,0,0,0.6)] hover:text-bone-50 transition-colors cursor-default">
+                The Gothic Gazette
+            </h1>
+
+            <p class="font-cinzel italic text-sm sm:text-base text-bone-300 mt-2 max-w-2xl mx-auto">
+                "Unflinching exposés on Nevermore Academy, monstrous abominations, and the unbearable torture of adolescent conformity."
+            </p>
+
+            <!-- Bottom Dateline Banner -->
+            <div class="mt-6 pt-3 border-t border-b border-gothicGold/30 flex flex-wrap items-center justify-between text-xs font-cinzel tracking-wider text-gothicGold/80 uppercase px-3 py-1.5">
+                <div>Editor-in-Chief: <span class="text-bone-100 font-bold">W. Addams</span></div>
+                <div class="flex items-center gap-2">
+                    <span>Friday, The Thirteenth</span>
+                    <span>✦</span>
+                    <span>Price: One Raven Feather or Silence</span>
+                </div>
+                <div>Circulation: <span class="text-bone-100 font-bold">All Secret Societies</span></div>
+            </div>
+        </div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,4,41,0.06)_0%,transparent_70%)] pointer-events-none"></div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- ========================================== -->
+        <!-- CORE FEATURE 1: ASYMMETRIC HERO SECTION (The Hex Constraint) -->
+        <!-- ========================================== -->
+        <section class="relative">
+            <div class="newspaper-border p-5 sm:p-7 bg-charcoal-900/90 rounded-sm relative overflow-hidden backdrop-blur-sm">
+                <!-- Watermark raven icon background -->
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none select-none">
+                    <i data-lucide="shield-alert" class="w-96 h-96 text-bone-50"></i>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    <!-- Left Column: 65% width on large screens (8 of 12 cols = 66.6%) -->
+                    <div class="lg:col-span-8 flex flex-col justify-between space-y-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="bg-crimson-600 text-bone-100 font-cinzel text-xs font-black tracking-widest uppercase px-3 py-1 rounded-sm shadow-crimson-glow">
+                                    Urgent Dispatch
+                                </span>
+                                <span class="text-xs font-cinzel tracking-wider text-gothicGold flex items-center gap-1.5">
+                                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> 03:42 AM • Woods Perimeter
+                                </span>
+                            </div>
+
+                            <!-- Massive Headline -->
+                            <h2 class="text-3xl sm:text-5xl lg:text-6xl font-cinzel font-black tracking-tight text-bone-100 uppercase leading-[1.08] hover:text-crimson-400 transition-colors">
+                                THE MONSTER OF JERICHO STRIKES AGAIN
+                            </h2>
+
+                            <!-- Subtitle / Lead Quote in Wednesday's sharp tone -->
+                            <div class="mt-5 p-4 rounded border-l-4 border-crimson-600 bg-charcoal-950/80 italic text-bone-200">
+                                <p class="text-base sm:text-lg leading-relaxed font-playfair">
+                                    “Sheriff Galpin insists on blaming bears. Personally, I find bears far too dignified to rend human flesh with such amateurish claw technique. If you insist on roaming the woods past curfew, at least have the courtesy to die somewhere aesthetically interesting.”
+                                </p>
+                                <span class="block mt-2 font-cinzel not-italic text-xs tracking-wider text-gothicGold font-semibold text-right">
+                                    — Wednesday Addams, Op-Ed Columnist & Raven Society Scribe
+                                </span>
+                            </div>
+
+                            <!-- Investigative Body Lead -->
+                            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-bone-300 leading-relaxed font-inter">
+                                <p>
+                                    Fresh claw striations measuring nineteen centimeters across were uncovered beneath the canopy near Weathervane Café at daybreak. Principal Weems has already issued a stern advisory claiming it was simply "overly enthusiastic fencing drills in suboptimal lighting."
+                                </p>
+                                <p>
+                                    Eyewitness reports from the Gorgon dormitories claim tremors reverberated through the cobblestones, accompanied by a guttural roar that caused three stone gargoyles to spontaneously decapitate. Dissection tools remain on standby.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Hero Interactive Footer -->
+                        <div class="pt-4 border-t border-charcoal-700 flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center gap-4 text-xs font-cinzel text-bone-400">
+                                <span class="flex items-center gap-1.5 text-crimson-400"><i data-lucide="flame" class="w-4 h-4"></i> 14 Wounded Theories</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4 text-gothicGold"></i> 89 Sealed Retorts</span>
+                            </div>
+                            <button onclick="scrollToGrid('academy-secrets')" class="inline-flex items-center gap-2 px-5 py-2.5 bg-crimson-700 hover:bg-crimson-600 text-bone-100 font-cinzel text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-crimson-glow hover:shadow-crimson-glow-lg rounded-sm group">
+                                <span>Inspect Autopsy Notes</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: 35% width (4 of 12 cols = 33.3%) -->
+                    <div class="lg:col-span-4 flex flex-col">
+                        <!-- Off-center featured image container with dark vignette and crimson glow borders -->
+                        <div class="relative group h-full min-h-[380px] rounded overflow-hidden border-2 border-crimson-700/80 shadow-crimson-glow transition-all duration-500 hover:shadow-crimson-glow-lg hover:border-crimson-500 flex flex-col justify-end p-5">
+                            <!-- Background Image with vignette -->
+                            <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80" 
+                                 alt="Eerie Foggy Gothic Forest" 
+                                 class="absolute inset-0 w-full h-full object-cover object-center filter grayscale contrast-125 brightness-75 group-hover:scale-105 group-hover:brightness-90 transition-all duration-700">
+                            
+                            <!-- Deep Dark Vignette & Crimson Gradient Glow -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-charcoal-950/60 to-transparent"></div>
+                            <div class="absolute inset-0 vignette-overlay pointer-events-none"></div>
+                            <div class="absolute inset-0 bg-crimson-900/20 mix-blend-color pointer-events-none"></div>
+
+                            <!-- Image Badge & Overlay Content -->
+                            <div class="relative z-10 space-y-2">
+                                <div class="inline-block px-2.5 py-1 bg-charcoal-950/90 border border-crimson-600 text-crimson-400 font-cinzel text-[10px] tracking-widest uppercase rounded">
+                                    Evidence #089-HYDE
+                                </div>
+                                <h3 class="font-cinzel text-lg font-bold text-bone-100 leading-snug">
+                                    The Pilgrims' Woods: Ground Zero
+                                </h3>
+                                <p class="text-xs text-bone-300 font-inter line-clamp-2">
+                                    Chemical analysis of the black bile residue confirms enzymatic properties unseen in local fauna.
+                                </p>
+                                <div class="pt-2 flex items-center justify-between text-[11px] font-cinzel text-gothicGold">
+                                    <span>Photographer: Anonymous Raven</span>
+                                    <span class="text-crimson-400 font-bold underline cursor-pointer hover:text-crimson-300" onclick="alert('Classified by Principal Larissa Weems. Accessing this forensic docket requires clearance from Nightshades Society.')">View Dossier</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- CORE FEATURE 2: EDITORIAL NEWS GRID (The Curse) -->
+        <!-- ========================================== -->
+        <section id="editorial-section" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-gothicGold/30 pb-4 gap-4">
+                <div>
+                    <div class="text-xs font-cinzel tracking-widest text-crimson-500 uppercase font-semibold mb-1 flex items-center gap-1.5">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        The Academy Chronology
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-cinzel font-bold text-bone-100 uppercase tracking-tight">
+                        Dispatches From The Shadows
+                    </h2>
+                </div>
+
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap items-center gap-2" id="filter-buttons-container">
+                    <button onclick="filterArticles('all', this)" class="category-btn active px-4 py-1.5 rounded-sm font-cinzel text-xs font-bold tracking-wider uppercase transition-all bg-crimson-700 text-bone-50 border border-crimson-500 shadow-crimson-glow">
+                        All Secrets
+                    </button>
+                    <button onclick="filterArticles('Academy Secrets', this)" class="category-btn px-4 py-1.5 rounded-sm font-cinzel text-xs font-bold tracking-wider uppercase transition-all bg-charcoal-800 text-bone-300 border border-charcoal-700 hover:border-gothicGold hover:text-bone-100">
+                        Academy Secrets
+                    </button>
+                    <button onclick="filterArticles('Occult Lore', this)" class="category-btn px-4 py-1.5 rounded-sm font-cinzel text-xs font-bold tracking-wider uppercase transition-all bg-charcoal-800 text-bone-300 border border-charcoal-700 hover:border-gothicGold hover:text-bone-100">
+                        Occult Lore
+                    </button>
+                    <button onclick="filterArticles('Faculty Whispers', this)" class="category-btn px-4 py-1.5 rounded-sm font-cinzel text-xs font-bold tracking-wider uppercase transition-all bg-charcoal-800 text-bone-300 border border-charcoal-700 hover:border-gothicGold hover:text-bone-100">
+                        Faculty Whispers
+                    </button>
+                </div>
+            </div>
+
+            <!-- Staggered Articles Grid with Crimson Hover & Transforms -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Article 1: Academy Secrets -->
+                <article data-category="Academy Secrets" class="article-card group bg-charcoal-900/90 border border-charcoal-700 rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-crimson-500 hover:shadow-crimson-glow">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" alt="Gargoyle & gothic cathedral" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-110 group-hover:filter-none transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-charcoal-950/90 text-gothicGold border border-gothicGold/40 font-cinzel text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                            Academy Secrets
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[11px] font-cinzel text-bone-400 mb-1 flex items-center gap-1.5">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-crimson-500"></i> Oct 29 • Ophelia Hall
+                            </div>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100 group-hover:text-crimson-400 transition-colors leading-snug">
+                                The Poe Cup Sabotage: Black Dahlia Poison in the Bilge Water
+                            </h3>
+                            <p class="text-xs text-bone-300 font-inter mt-2 line-clamp-3 leading-relaxed">
+                                Forensic swabs from the Amontillado boat reveal trace amounts of belladonna and siren wax. While the Black Cats feign innocence, their claw polish smells suspiciously botanical.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-xs font-cinzel text-gothicGold">
+                            <span class="italic font-playfair">By W. Addams</span>
+                            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1 text-crimson-400 font-semibold cursor-pointer" onclick="readArticle('Poe Cup Sabotage')">Read Archive →</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2: Occult Lore -->
+                <article data-category="Occult Lore" class="article-card group bg-charcoal-900/90 border border-charcoal-700 rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-crimson-500 hover:shadow-crimson-glow">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80" alt="Ancient Grimoire" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-110 group-hover:filter-none transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-charcoal-950/90 text-crimson-400 border border-crimson-600/50 font-cinzel text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                            Occult Lore
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[11px] font-cinzel text-bone-400 mb-1 flex items-center gap-1.5">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-crimson-500"></i> Oct 28 • Nightshades Crypt
+                            </div>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100 group-hover:text-crimson-400 transition-colors leading-snug">
+                                Crackstone’s Blood Sigil: Translating The 1625 Crypt Book
+                            </h3>
+                            <p class="text-xs text-bone-300 font-inter mt-2 line-clamp-3 leading-relaxed">
+                                Joseph Crackstone’s obsidian binding contains warnings of resurrection via outcast blood. New translations show Goody Addams didn't just banish him—she cursed his lineage to eternal restlessness.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-xs font-cinzel text-gothicGold">
+                            <span class="italic font-playfair">By Eugene Ottinger</span>
+                            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1 text-crimson-400 font-semibold cursor-pointer" onclick="readArticle('Crackstone Sigil')">Read Archive →</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 3: Faculty Whispers -->
+                <article data-category="Faculty Whispers" class="article-card group bg-charcoal-900/90 border border-charcoal-700 rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-crimson-500 hover:shadow-crimson-glow">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?auto=format&fit=crop&w=800&q=80" alt="Mysterious Gothic Hallway" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-110 group-hover:filter-none transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-charcoal-950/90 text-gothicGold border border-gothicGold/40 font-cinzel text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                            Faculty Whispers
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[11px] font-cinzel text-bone-400 mb-1 flex items-center gap-1.5">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-crimson-500"></i> Oct 27 • Principal's Office
+                            </div>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100 group-hover:text-crimson-400 transition-colors leading-snug">
+                                Shape-Shifting Secrets: Weems' Stash of Classified Records
+                            </h3>
+                            <p class="text-xs text-bone-300 font-inter mt-2 line-clamp-3 leading-relaxed">
+                                Why does Principal Weems lock the east wing filing cabinets before every full moon? Our anonymous sources inside the administrative bureau reveal a list of expelled Hyres dating back thirty years.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-xs font-cinzel text-gothicGold">
+                            <span class="italic font-playfair">By Enid Sinclair</span>
+                            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1 text-crimson-400 font-semibold cursor-pointer" onclick="readArticle('Weems Secrets')">Read Archive →</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 4: Academy Secrets -->
+                <article data-category="Academy Secrets" class="article-card group bg-charcoal-900/90 border border-charcoal-700 rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-crimson-500 hover:shadow-crimson-glow">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1519074069444-1ba4ea16e60b?auto=format&fit=crop&w=800&q=80" alt="Dark Raven & skulls" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-110 group-hover:filter-none transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-charcoal-950/90 text-gothicGold border border-gothicGold/40 font-cinzel text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                            Academy Secrets
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[11px] font-cinzel text-bone-400 mb-1 flex items-center gap-1.5">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-crimson-500"></i> Oct 25 • Nightshades Den
+                            </div>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100 group-hover:text-crimson-400 transition-colors leading-snug">
+                                Two Snaps To Enter: Has The Secret Society Been Infiltrated?
+                            </h3>
+                            <p class="text-xs text-bone-300 font-inter mt-2 line-clamp-3 leading-relaxed">
+                                The statue of Edgar Allan Poe was spotted turning clockwise without password recitation. Are sirens or norms using magnetic resonance to trespass into the sanctuary?
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-xs font-cinzel text-gothicGold">
+                            <span class="italic font-playfair">By W. Addams</span>
+                            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1 text-crimson-400 font-semibold cursor-pointer" onclick="readArticle('Secret Society')">Read Archive →</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 5: Occult Lore -->
+                <article data-category="Occult Lore" class="article-card group bg-charcoal-900/90 border border-charcoal-700 rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-crimson-500 hover:shadow-crimson-glow">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=800&q=80" alt="Cemetery at night" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-110 group-hover:filter-none transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-charcoal-950/90 text-crimson-400 border border-crimson-600/50 font-cinzel text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                            Occult Lore
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[11px] font-cinzel text-bone-400 mb-1 flex items-center gap-1.5">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-crimson-500"></i> Oct 24 • Jericho Cemetery
+                            </div>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100 group-hover:text-crimson-400 transition-colors leading-snug">
+                                Visions in the Mausoleum: The Psychic Burden of Raven Seers
+                            </h3>
+                            <p class="text-xs text-bone-300 font-inter mt-2 line-clamp-3 leading-relaxed">
+                                Doves see positive prophecies; Ravens see catastrophic reckonings. A candid evaluation on why electric shock therapy and black coffee fail to mitigate impending apocalypse visions.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-xs font-cinzel text-gothicGold">
+                            <span class="italic font-playfair">By W. Addams</span>
+                            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1 text-crimson-400 font-semibold cursor-pointer" onclick="readArticle('Psychic Visions')">Read Archive →</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 6: Faculty Whispers -->
+                <article data-category="Faculty Whispers" class="article-card group bg-charcoal-900/90 border border-charcoal-700 rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-crimson-500 hover:shadow-crimson-glow">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?auto=format&fit=crop&w=800&q=80" alt="Botanical laboratory plants" class="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-110 group-hover:filter-none transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-charcoal-950/90 text-gothicGold border border-gothicGold/40 font-cinzel text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                            Faculty Whispers
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[11px] font-cinzel text-bone-400 mb-1 flex items-center gap-1.5">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-crimson-500"></i> Oct 22 • The Conservatory
+                            </div>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100 group-hover:text-crimson-400 transition-colors leading-snug">
+                                Miss Thornhill’s Carnivorous Flora: Educational or Lethal?
+                            </h3>
+                            <p class="text-xs text-bone-300 font-inter mt-2 line-clamp-3 leading-relaxed">
+                                Several carnivorous flytraps in Greenhouse Three have developed a palate for raw beef marrow and vintage vinyl records. Botany students are urged not to wear floral deodorants.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-xs font-cinzel text-gothicGold">
+                            <span class="italic font-playfair">By Eugene Ottinger</span>
+                            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1 text-crimson-400 font-semibold cursor-pointer" onclick="readArticle('Thornhill Flora')">Read Archive →</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- CORE FEATURE 3: AUTHOR PROFILES SECTION -->
+        <!-- ========================================== -->
+        <section class="space-y-6">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-cinzel tracking-widest text-crimson-500 uppercase font-semibold">The Newsroom Tribunal</span>
+                <h2 class="text-3xl font-cinzel font-bold text-bone-100 uppercase tracking-tight mt-1">
+                    Architects of the Inquisition
+                </h2>
+                <p class="text-xs text-bone-300 font-inter mt-2">
+                    Meet the morbid minds dissecting Jericho's gruesome secrets and Nevermore's unspoken atrocities.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Profile 1: Wednesday Addams -->
+                <div class="newspaper-border bg-charcoal-900/80 p-6 rounded relative overflow-hidden group hover:border-crimson-500 transition-all duration-300 shadow-sm hover:shadow-crimson-glow">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-full border-2 border-crimson-600 overflow-hidden bg-charcoal-950 flex-shrink-0 relative group-hover:border-crimson-400 transition-colors">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Wednesday Addams" class="w-full h-full object-cover filter grayscale contrast-150">
+                            <div class="absolute inset-0 bg-crimson-900/30 mix-blend-color"></div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-cinzel font-bold uppercase tracking-wider text-crimson-400 block">Editor-in-Chief</span>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100">Wednesday Addams</h3>
+                            <span class="text-xs text-bone-400 italic font-playfair">Cello Virtuoso & Forensic Cynic</span>
+                        </div>
+                    </div>
+                    <blockquote class="text-xs italic text-bone-300 border-l-2 border-crimson-600 pl-3 py-1 font-playfair my-3">
+                        “I find social media to be an abhorrent soul-sucking void of meaningless affirmation. I prefer black typewriters and autopsies.”
+                    </blockquote>
+                    <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-[11px] font-cinzel text-bone-400">
+                        <span>Beats: Homicide, Cryptids, Revenge</span>
+                        <span class="text-crimson-500 font-bold">Desk #01</span>
+                    </div>
+                </div>
+
+                <!-- Profile 2: Enid Sinclair -->
+                <div class="newspaper-border bg-charcoal-900/80 p-6 rounded relative overflow-hidden group hover:border-gothicGold transition-all duration-300 shadow-sm hover:shadow-gold-glow">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-full border-2 border-gothicGold overflow-hidden bg-charcoal-950 flex-shrink-0 relative group-hover:border-gothicGold-light transition-colors">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Enid Sinclair" class="w-full h-full object-cover filter contrast-110 saturate-125">
+                            <div class="absolute inset-0 bg-gothicGold/20 mix-blend-color"></div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-cinzel font-bold uppercase tracking-wider text-gothicGold block">Gossip Columnist</span>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100">Enid Sinclair</h3>
+                            <span class="text-xs text-bone-400 italic font-playfair">Lycanthrope & Color Enthusiast</span>
+                        </div>
+                    </div>
+                    <blockquote class="text-xs italic text-bone-300 border-l-2 border-gothicGold pl-3 py-1 font-playfair my-3">
+                        “Wednesday said my glitter emojis were psychological torture, which I took as a compliment! Spill your tea, besties!”
+                    </blockquote>
+                    <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-[11px] font-cinzel text-bone-400">
+                        <span>Beats: Rave'N Scandals, Lycan Gossip</span>
+                        <span class="text-gothicGold font-bold">Ophelia Hall</span>
+                    </div>
+                </div>
+
+                <!-- Profile 3: Eugene Ottinger -->
+                <div class="newspaper-border bg-charcoal-900/80 p-6 rounded relative overflow-hidden group hover:border-bone-300 transition-all duration-300 shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-full border-2 border-bone-300 overflow-hidden bg-charcoal-950 flex-shrink-0 relative group-hover:border-bone-100 transition-colors">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80" alt="Eugene Ottinger" class="w-full h-full object-cover filter grayscale contrast-125">
+                            <div class="absolute inset-0 bg-charcoal-700/40 mix-blend-overlay"></div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-cinzel font-bold uppercase tracking-wider text-bone-300 block">Environmental Reporter</span>
+                            <h3 class="font-cinzel text-xl font-bold text-bone-100">Eugene Ottinger</h3>
+                            <span class="text-xs text-bone-400 italic font-playfair">President, The Hummers Club</span>
+                        </div>
+                    </div>
+                    <blockquote class="text-xs italic text-bone-300 border-l-2 border-bone-300 pl-3 py-1 font-playfair my-3">
+                        “The bees hear all. If someone steps on a single comb in the woods, my swarm communicates their exact coordinates.”
+                    </blockquote>
+                    <div class="pt-3 border-t border-charcoal-800 flex items-center justify-between text-[11px] font-cinzel text-bone-400">
+                        <span>Beats: Apiary Ecology, Forest Recon</span>
+                        <span class="text-bone-200 font-bold">Apiary Shed #2</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- CORE FEATURE 5: IN-UNIVERSE SPONSOR INTEGRATION (Kapidhwaj) -->
+        <!-- ========================================== -->
+        <section class="relative">
+            <div class="relative rounded border-2 border-gothicGold/50 bg-gradient-to-r from-charcoal-950 via-charcoal-900 to-charcoal-950 p-6 sm:p-10 shadow-gold-glow overflow-hidden">
+                <!-- Metallic sheen accents -->
+                <div class="absolute top-0 right-0 w-80 h-80 bg-gothicGold/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-60 h-60 bg-crimson-900/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-gothicGold/10 border border-gothicGold/40 text-gothicGold text-xs font-cinzel tracking-widest uppercase">
+                            <i data-lucide="shield" class="w-3.5 h-3.5"></i> Guild Patronage & Preservation
+                        </div>
+                        
+                        <h3 class="text-2xl sm:text-4xl font-cinzel font-bold text-bone-100 tracking-wide uppercase">
+                            THE KAPIDHWAJ ARCHIVES
+                        </h3>
+
+                        <!-- Exact in-universe lore specified in prompt -->
+                        <p class="text-sm sm:text-base text-bone-200 font-playfair italic leading-relaxed">
+                            “Every forbidden ink stroke of The Gothic Gazette is preserved through the ancient binding wards and technology of <span class="text-gothicGold font-semibold not-italic">Kapidhwaj</span>.”
+                        </p>
+
+                        <p class="text-xs text-bone-400 font-inter leading-relaxed max-w-2xl">
+                            Forged at the intersection of modern engineering wizardry and archaic protective glyphs, Kapidhwaj ensures that truth remains incorruptible against fire, water, and memory spells.
+                        </p>
+
+                        <div class="pt-2 flex flex-wrap items-center gap-4">
+                            <!-- Styled CTA button linking directly to https://instagram.com/kapidhwaj.innovations -->
+                            <a href="https://instagram.com/kapidhwaj.innovations" target="_blank" rel="noopener noreferrer" 
+                               class="inline-flex items-center gap-2.5 px-6 py-3 rounded-sm bg-gradient-to-r from-gothicGold via-gothicGold-light to-gothicGold hover:from-gothicGold-dark hover:to-gothicGold text-charcoal-950 font-cinzel text-xs font-black tracking-widest uppercase transition-all duration-300 shadow-gold-glow hover:scale-105 group">
+                                <i data-lucide="instagram" class="w-4 h-4 text-charcoal-950 group-hover:rotate-12 transition-transform"></i>
+                                <span>Inspect Ancient Guild (@kapidhwaj.innovations)</span>
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                            </a>
+
+                            <span class="text-xs font-cinzel text-gothicGold/70 tracking-wider">
+                                Arcane Seal Authenticated #KPD-779
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 flex justify-center">
+                        <!-- Guild Sigil Visual -->
+                        <div class="w-48 h-48 sm:w-56 sm:h-56 rounded-full border-2 border-gothicGold/40 p-3 bg-charcoal-950/80 shadow-inner-dark flex items-center justify-center relative group">
+                            <div class="w-full h-full rounded-full border border-dashed border-gothicGold/60 animate-[spin_30s_linear_infinite] flex items-center justify-center"></div>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                                <i data-lucide="compass" class="w-12 h-12 text-gothicGold group-hover:scale-110 transition-transform"></i>
+                                <span class="font-cinzel text-xs tracking-widest uppercase font-bold text-bone-100 mt-2">Kapidhwaj</span>
+                                <span class="font-inter text-[9px] text-gothicGold tracking-wider mt-0.5">EST. MMXXIV</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Whistleblower Floating / Sticky Banner Call-to-Action -->
+        <section class="border border-crimson-800/60 bg-gradient-to-b from-crimson-950/40 to-charcoal-950 p-6 sm:p-8 rounded text-center space-y-4">
+            <i data-lucide="eye-off" class="w-10 h-10 text-crimson-500 mx-auto animate-blood-pulse"></i>
+            <h3 class="text-2xl sm:text-3xl font-cinzel font-bold text-bone-100 uppercase">
+                Possess Evidence Of An Outcast Abomination?
+            </h3>
+            <p class="text-xs sm:text-sm text-bone-300 max-w-xl mx-auto font-inter">
+                Our encrypted raven network safeguards your anonymity. No principal, sheriff, or psychic medium can trace the parchment.
+            </p>
+            <div>
+                <button onclick="openSecretModal()" class="px-8 py-3 bg-crimson-700 hover:bg-crimson-600 text-bone-50 font-cinzel text-xs font-black tracking-widest uppercase rounded shadow-crimson-glow hover:shadow-crimson-glow-lg transition-all duration-300">
+                    Enter The Whistleblower Portal
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- CORE FEATURE 4: ANONYMOUS TIP / WHISTLEBLOWER PORTAL MODAL -->
+    <!-- ========================================== -->
+    <div id="secret-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-950/85 backdrop-blur-md hidden transition-opacity duration-300 opacity-0" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="relative w-full max-w-lg bg-charcoal-900 border-2 border-crimson-700 rounded shadow-crimson-glow-lg overflow-hidden transform scale-95 transition-transform duration-300" id="secret-modal-content">
+            
+            <!-- Top bar -->
+            <div class="bg-charcoal-950 px-6 py-4 border-b border-charcoal-700 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shield-alert" class="w-5 h-5 text-crimson-500"></i>
+                    <h4 id="modal-title" class="font-cinzel text-lg font-bold uppercase tracking-wider text-bone-100">
+                        Submit Your Secrets
+                    </h4>
+                </div>
+                <button onclick="closeSecretModal()" class="text-bone-400 hover:text-crimson-400 transition-colors p-1" aria-label="Close modal">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Form State -->
+            <div id="modal-form-view" class="p-6 space-y-4">
+                <p class="text-xs text-bone-300 font-inter">
+                    The Raven Society strictly guards all confidential dossiers. State your truth before the bells chime midnight.
+                </p>
+
+                <form id="whistleblower-form" onsubmit="submitSecret(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-cinzel uppercase tracking-wider text-gothicGold mb-1.5" for="codename">
+                            Your Pseudonym / Codename *
+                        </label>
+                        <input type="text" id="codename" required placeholder="e.g. NightshadeRaven_07" 
+                               class="w-full bg-charcoal-950 border border-charcoal-700 focus:border-crimson-500 focus:ring-1 focus:ring-crimson-500 text-bone-100 text-sm px-3.5 py-2.5 rounded outline-none transition-all placeholder:text-charcoal-600 font-inter">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-cinzel uppercase tracking-wider text-gothicGold mb-1.5" for="secret-category">
+                            Breach Classification *
+                        </label>
+                        <select id="secret-category" required 
+                                class="w-full bg-charcoal-950 border border-charcoal-700 focus:border-crimson-500 focus:ring-1 focus:ring-crimson-500 text-bone-100 text-sm px-3.5 py-2.5 rounded outline-none transition-all font-inter">
+                            <option value="Academy Secrets">Academy Secrets</option>
+                            <option value="Occult Lore">Occult Lore & Dark Grimoires</option>
+                            <option value="Faculty Whispers">Faculty Whispers & Coverups</option>
+                            <option value="Monster Sightings">Pilgrim Forest Abominations</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-cinzel uppercase tracking-wider text-gothicGold mb-1.5" for="confidential-secret">
+                            Confidential Secret / Evidence *
+                        </label>
+                        <textarea id="confidential-secret" rows="4" required placeholder="Detail the coordinates, incantations, or suspicious behaviour..." 
+                                  class="w-full bg-charcoal-950 border border-charcoal-700 focus:border-crimson-500 focus:ring-1 focus:ring-crimson-500 text-bone-100 text-sm px-3.5 py-2.5 rounded outline-none transition-all placeholder:text-charcoal-600 font-inter resize-none"></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <button type="button" onclick="closeSecretModal()" class="px-4 py-2 text-xs font-cinzel uppercase tracking-wider text-bone-400 hover:text-bone-100">
+                            Burn Parchment
+                        </button>
+                        <button type="submit" class="px-6 py-2.5 bg-crimson-700 hover:bg-crimson-600 text-bone-50 font-cinzel text-xs font-bold uppercase tracking-wider rounded shadow-crimson-glow hover:shadow-crimson-glow-lg transition-all">
+                            Dispatch To Raven Scribe
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Animated Success State -->
+            <div id="modal-success-view" class="p-8 text-center space-y-4 hidden">
+                <div class="w-16 h-16 rounded-full bg-crimson-900/50 border-2 border-crimson-500 text-crimson-400 flex items-center justify-center mx-auto shadow-crimson-glow animate-bounce">
+                    <i data-lucide="check" class="w-8 h-8"></i>
+                </div>
+                <h4 class="font-cinzel text-2xl font-bold uppercase text-bone-100">
+                    Sealed in Blood & Wax
+                </h4>
+                <p id="success-codename-message" class="text-xs text-bone-300 font-inter max-w-sm mx-auto leading-relaxed">
+                    Your dispatch has been committed to the Kapidhwaj encrypted vaults. Wednesday Addams will inspect your testimony upon nightfall.
+                </p>
+                <div class="pt-4">
+                    <button onclick="closeSecretModal()" class="px-6 py-2 border border-gothicGold/50 text-gothicGold hover:bg-gothicGold hover:text-charcoal-950 font-cinzel text-xs font-bold uppercase tracking-wider rounded transition-all">
+                        Return to Gazette
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Article Reader Mock Modal (For interactive preview) -->
+    <div id="article-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-950/85 backdrop-blur-md hidden transition-opacity duration-300 opacity-0" role="dialog" aria-modal="true">
+        <div class="relative w-full max-w-2xl bg-charcoal-900 border border-gothicGold/40 rounded p-6 shadow-2xl max-h-[85vh] overflow-y-auto" id="article-modal-content">
+            <button onclick="closeArticleModal()" class="absolute top-4 right-4 text-bone-400 hover:text-crimson-400 p-1">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <span class="text-xs font-cinzel text-crimson-500 uppercase tracking-widest font-semibold block mb-1">Archived Dispatch</span>
+            <h3 id="article-modal-title" class="font-cinzel text-2xl font-bold text-bone-100 uppercase mb-4"></h3>
+            <div class="space-y-4 text-sm text-bone-300 font-inter leading-relaxed">
+                <p>
+                    The full manuscript contains encrypted glyphs verified by Eugene's apiary recon unit and sealed with Nightshade sigils.
+                </p>
+                <blockquote class="p-3 border-l-2 border-crimson-600 bg-charcoal-950 italic text-bone-200 font-playfair">
+                    “Emotion is a sign of vulnerability. Inventing conspiracy theories about the headmistress, however, is simply intellectual exercise.” — W. Addams
+                </blockquote>
+                <p>
+                    All testimonies recorded in this ledger are bound by the ancient archiving protocols of Kapidhwaj Innovations.
+                </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-charcoal-800 flex justify-end">
+                <button onclick="closeArticleModal()" class="px-5 py-2 bg-charcoal-800 hover:bg-crimson-700 text-bone-100 font-cinzel text-xs font-bold uppercase rounded">
+                    Close Archive
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-charcoal-800 bg-charcoal-950 py-12 px-4 mt-16 text-bone-400 text-xs">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-2 md:col-span-2">
+                <h4 class="font-gothic text-3xl text-bone-100 tracking-wider">THE GOTHIC GAZETTE</h4>
+                <p class="font-inter text-xs text-bone-400 max-w-md">
+                    Published without permission from Principal Larissa Weems or the Jericho Town Council. Printed with raven blood and dark metallic ink.
+                </p>
+            </div>
+            <div>
+                <h5 class="font-cinzel font-bold text-gothicGold uppercase tracking-wider mb-2">Guild Affiliations</h5>
+                <ul class="space-y-1.5 font-cinzel text-[11px]">
+                    <li><a href="https://instagram.com/kapidhwaj.innovations" target="_blank" class="hover:text-crimson-400 transition-colors">Kapidhwaj Archives (@kapidhwaj.innovations)</a></li>
+                    <li><a href="#editorial-section" class="hover:text-crimson-400 transition-colors">The Nightshades Society</a></li>
+                    <li><a href="#editorial-section" class="hover:text-crimson-400 transition-colors">The Hummers Hive Network</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-cinzel font-bold text-gothicGold uppercase tracking-wider mb-2">Emergency Protocols</h5>
+                <ul class="space-y-1.5 font-cinzel text-[11px]">
+                    <li><a href="javascript:void(0)" onclick="openSecretModal()" class="hover:text-crimson-400 transition-colors">Whistleblower Drop</a></li>
+                    <li><span class="text-bone-400">Monster Sirens: 3 Long Blasts</span></li>
+                    <li><span class="text-bone-400">Curfew: Non-Negotiable</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-6 border-t border-charcoal-800 text-center font-cinzel text-[11px] text-bone-400 flex flex-wrap justify-between items-center gap-2">
+            <span>© Nevermore Outcasts &amp; The Gothic Gazette. All Dark Rights Reserved.</span>
+            <span>Archival Technology Powered by <a href="https://instagram.com/kapidhwaj.innovations" target="_blank" class="text-gothicGold hover:underline">Kapidhwaj Innovations</a></span>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Category Filter Logic
+        function filterArticles(category, btnElement) {
+            const articles = document.querySelectorAll('.article-card');
+            const buttons = document.querySelectorAll('.category-btn');
+
+            // Toggle active styles on buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-crimson-700', 'text-bone-50', 'border-crimson-500', 'shadow-crimson-glow');
+                btn.classList.add('bg-charcoal-800', 'text-bone-300', 'border-charcoal-700');
+            });
+
+            btnElement.classList.remove('bg-charcoal-800', 'text-bone-300', 'border-charcoal-700');
+            btnElement.classList.add('bg-crimson-700', 'text-bone-50', 'border-crimson-500', 'shadow-crimson-glow');
+
+            // Filter grid cards
+            articles.forEach(article => {
+                const articleCat = article.getAttribute('data-category');
+                if (category === 'all' || articleCat === category) {
+                    article.style.display = 'flex';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        }
+
+        // Smooth scroll helper
+        function scrollToGrid(category) {
+            const element = document.getElementById('editorial-section');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Whistleblower Modal Logic
+        const modal = document.getElementById('secret-modal');
+        const modalContent = document.getElementById('secret-modal-content');
+        const formView = document.getElementById('modal-form-view');
+        const successView = document.getElementById('modal-success-view');
+
+        function openSecretModal() {
+            modal.classList.remove('hidden');
+            // Animate fade-in
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeSecretModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // Reset form state after close
+                formView.classList.remove('hidden');
+                successView.classList.add('hidden');
+                document.getElementById('whistleblower-form').reset();
+            }, 300);
+        }
+
+        function submitSecret(event) {
+            event.preventDefault();
+            const codename = document.getElementById('codename').value || 'Nameless Spectre';
+            const category = document.getElementById('secret-category').value;
+            
+            const msgEl = document.getElementById('success-codename-message');
+            msgEl.textContent = `Operative "${codename}", your transmission under "${category}" has been bound in Kapidhwaj encrypted wax. Principal Weems will never intercept it.`;
+
+            // Transition to animated success state
+            formView.classList.add('hidden');
+            successView.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // Article preview helper
+        function readArticle(title) {
+            const articleModal = document.getElementById('article-modal');
+            const articleTitle = document.getElementById('article-modal-title');
+            articleTitle.textContent = title;
+            articleModal.classList.remove('hidden');
+            setTimeout(() => {
+                articleModal.classList.remove('opacity-0');
+            }, 10);
+            lucide.createIcons();
+        }
+
+        function closeArticleModal() {
+            const articleModal = document.getElementById('article-modal');
+            articleModal.classList.add('opacity-0');
+            setTimeout(() => {
+                articleModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close modals on clicking backdrop
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                closeSecretModal();
+            }
+            const articleModal = document.getElementById('article-modal');
+            if (event.target === articleModal) {
+                closeArticleModal();
+            }
+        };
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSecretModal();
+                closeArticleModal();
+            }
+        });
+    </script>
+</body>
+</html>
